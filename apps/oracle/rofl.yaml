@@ -1,0 +1,54 @@
+name: oracle
+version: 0.1.0
+tee: tdx
+kind: container
+resources:
+  memory: 512
+  cpus: 1
+  storage:
+    kind: disk-persistent
+    size: 512
+artifacts:
+  firmware: https://github.com/oasisprotocol/oasis-boot/releases/download/v0.4.2/ovmf.tdx.fd#db47100a7d6a0c1f6983be224137c3f8d7cb09b63bb1c7a5ee7829d8e994a42f
+  kernel: https://github.com/oasisprotocol/oasis-boot/releases/download/v0.4.2/stage1.bin#02903bd0ddfe1e3552e95767f1be17e801690d73d90bb1e800aa4879ba46c4d7
+  stage2: https://github.com/oasisprotocol/oasis-boot/releases/download/v0.4.2/stage2-podman.tar.bz2#6f2487aa064460384309a58c858ffea9316e739331b5c36789bb2f61117869d6
+  container:
+    runtime: https://github.com/oasisprotocol/oasis-sdk/releases/download/rofl-containers%2Fv0.5.0/rofl-containers#800be74e543f1d10d12ef6fadce89dd0a0ce7bc798dbab4f8d7aa012d82fbff1
+    compose: compose.yaml
+deployments:
+  default:
+    app_id: rofl1qpw485nk7xv8qvrvqf93l08sv5uuy0wyku528yfl
+    network: testnet
+    paratime: sapphire
+    admin: kristjan
+    oci_repository: rofl.sh/135c272d-2460-46b8-acbe-c980ab8be373:1749082391
+    trust_root:
+      height: 26912637
+      hash: 7879cf1fadfe98b6230fbb298f11bef49dfb4a0fa762624b338cddafb5d9908a
+    policy:
+      quotes:
+        pcs:
+          tcb_validity_period: 30
+          min_tcb_evaluation_data_number: 18
+          tdx: {}
+      enclaves:
+        - id: pfffef8UZeWGSjdN1xbTtvhwuXviKgqF9eShy+bZqKgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+        - id: T6lJOGvQ9ykYNx0c3Qf644jDfJXuQvtQgmIRWjG2KZsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+      endorsements:
+        - any: {}
+      fees: endorsing_node
+      max_expiration: 3
+    secrets:
+      - name: CONTRACT_ADDRESS
+        value: pGJwa1gguDvHPnlVOBTiYxs4XF8mQCoU9BNBHfunPCUboh0Dqk1kbmFtZVggUgYz10/Z6KN3oGYzWOBOhUIhgpfd/FuCmCClQdK0S6Nlbm9uY2VPuPz7iEto9FFI7bG7OFjsZXZhbHVlWDrRdDSBDw0FrMCsrm34RSTX2zLB5Cam8gghrysSx5Dxkss0RL7jITnoGhFU1b+lQbqOeUM34KmxgMZB
+      - name: PRIVATE_KEY
+        value: pGJwa1ggq7eOHmxPwP2ZAYzjsgcdJtk2RQHr/hqaHSfMiEEO7QdkbmFtZVgb03+/ttCLlf6YqZEAM/UGTWEfTieh4KpWh480ZW5vbmNlT3jGzobjbWkOr4IPIDfd52V2YWx1ZVhSCcMHDnZrHrBcIc92bHFPL7z4FKkdL97jDqsMWvmp1l+YKOo+9QmwOD7tkgT/Ymx9csFvDA7D+KcQTtl76ZMzhxWz26CLa4G/iWuROl+rOuwj8A==
+      - name: NETWORK_NAME
+        value: pGJwa1gg7i1arUvJPUkbcLc5PbZA+t/J2UOy/8kjPs6HSYa5lGNkbmFtZVgcfFLg9i1VX8dGKt6FgH9rzklaox2uxp3LfvpJT2Vub25jZU+wpCpvcvZLvMmESq5sAj1ldmFsdWVYIBWW+H4WDRlr1AiubPTkFB6yOxdxzIwLVi15vEvSIKUX
+      - name: OPENROUTER_API_KEY
+        value: pGJwa1ggOHEbfRegwKllM+rE4NTVUdlrHYX+s/yzezdg+X9KfARkbmFtZVgirDI7iWuwZXkwO+HgNCVsmgjBqtPVmlOYYdMGSK+z7S9SXWVub25jZU8gXus1YQ6UkZIuEVHhsSxldmFsdWVYWQzR7umHGfnkrBKxp50c7NHezkEYTfwcuaK584R8t9DdPKbOWjAP3q8ANQhM3Dw1q79+4EX/ZHkOQ2BkSZNxlwyEfYBcdKSByVQEz8oIvhMBW4nwrcVEkUlw
+    machines:
+      default:
+        provider: oasis1qp2ens0hsp7gh23wajxa4hpetkdek3swyyulyrmz
+        offer: playground_short
+        id: 00000000000000bc

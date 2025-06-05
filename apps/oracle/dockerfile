@@ -1,0 +1,28 @@
+# Use Bun alpine image for smaller size and better ROFL compatibility
+FROM oven/bun:1.1.34-alpine
+
+# Set working directory
+WORKDIR /oracle
+
+# Copy package files first for better caching
+COPY package.json bun.lockb* ./
+
+# Install dependencies
+RUN bun install --frozen-lockfile --production
+
+# Copy source code and configuration
+COPY oracle.ts oracleAbi.ts tsconfig.json ./
+
+# Create a non-root user for security
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S oracle -u 1001 -G nodejs
+
+# Change ownership of the oracle directory
+RUN chown -R oracle:nodejs /oracle
+USER oracle
+
+# Set environment variables
+ENV NODE_ENV=production
+
+# Run the oracle application
+ENTRYPOINT ["bun", "oracle.ts"]
